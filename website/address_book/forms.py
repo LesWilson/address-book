@@ -66,16 +66,11 @@ def setFieldFormatting(target):
 # Update Contact Form
 class UpdateContactForm(ModelForm):
 
-    # image = forms.ClearableFileInput()
-    # image.widget = CustomFileInput()
-    # image.template_name = 'includes/clearable_file_input.html'
-    # image.use_fieldset = True
     image = forms.ImageField(required=False, widget=CustomFileInput)
     
     class Meta:
         model = Contact
-        fields = '__all__' # ('first_name', 'last_name', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'postcode', 'country')
-        # exclude = ('address2', 'country')· # add this line to exclude specific fields
+        fields = '__all__'
         exclude = ('user',)
     def __init__(self, *args, **kwargs):
         super(UpdateContactForm, self).__init__(*args, **kwargs)
