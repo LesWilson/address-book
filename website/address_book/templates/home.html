@@ -13,13 +13,20 @@
   </div>
 
 {% for contact in contacts %}
-  
+
   <div class="card mb-2 col-md-6 offset-md-2">
-    <div class="card-body">
-      <h5 class="card-title">{{ contact }}</h5>
-      <p class="card-text">{{ contact.email|default_if_none:"" }}</p>
-      <a href="{% url 'contact' contact.id %}" class="btn btn-primary btn-sm">View</a>
-      <a href="{% url 'delete_contact' contact.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+    <div class="row g-0">
+      <div class="col-md-2">
+        {% if contact.image %}<img src="{{ contact.image.url }}" height="120" class="img-fluid rounded-start" alt="...">{% endif %}
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{ contact }}</h5>
+          <p class="card-text">{{ contact.email|default_if_none:"" }}</p>
+          <a href="{% url 'contact' contact.id %}" class="btn btn-primary btn-sm">View</a>
+          <a href="{% url 'delete_contact' contact.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
+      </div>
     </div>
   </div>
 

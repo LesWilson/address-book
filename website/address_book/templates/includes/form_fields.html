@@ -24,16 +24,16 @@
 {% if form.errors %}
 <div class="alert alert-danger alert-dismissible fade show text-left" role="alert">
   Your submission has errors, see below.
-</div> 
+</div>
 {% endif %}
 
 {% for field in form %}
   {% if field|field_type == 'CustomFileInput' or field|field_type == 'ClearableFileInput' %}
     <div class="mb-3">
-      {{ field }}  
+      {{ field }}
   {% else %}
     <div class="form-floating mb-3">
-      {{ field }}  
+      {{ field }}
       {{ field.label_tag }}
   {% endif %}
   {% if field.help_text %}
@@ -43,7 +43,7 @@
   {% endif %}
     {{ field.errors }}
   </div>
-{% endfor %}     
+{% endfor %}
 
 <script language="javascript">
 

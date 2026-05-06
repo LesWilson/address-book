@@ -7,24 +7,31 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('last_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('email', models.EmailField(blank=True, max_length=200, null=True)),
-                ('phone', models.CharField(blank=True, max_length=100, null=True)),
-                ('address1', models.CharField(blank=True, max_length=100, null=True)),
-                ('address2', models.CharField(blank=True, max_length=100, null=True)),
-                ('city', models.CharField(blank=True, max_length=100, null=True)),
-                ('state', models.CharField(blank=True, max_length=100, null=True)),
-                ('postcode', models.CharField(blank=True, max_length=20, null=True)),
-                ('country', models.CharField(blank=True, max_length=100, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(blank=True, max_length=100, null=True)),
+                ("last_name", models.CharField(blank=True, max_length=100, null=True)),
+                ("email", models.EmailField(blank=True, max_length=200, null=True)),
+                ("phone", models.CharField(blank=True, max_length=100, null=True)),
+                ("address1", models.CharField(blank=True, max_length=100, null=True)),
+                ("address2", models.CharField(blank=True, max_length=100, null=True)),
+                ("city", models.CharField(blank=True, max_length=100, null=True)),
+                ("state", models.CharField(blank=True, max_length=100, null=True)),
+                ("postcode", models.CharField(blank=True, max_length=20, null=True)),
+                ("country", models.CharField(blank=True, max_length=100, null=True)),
             ],
         ),
     ]
