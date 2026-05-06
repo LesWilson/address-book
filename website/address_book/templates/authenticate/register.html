@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-5 offset-md-3">
+        <form action="{% url 'register_user' %}" method="POST">
+          {% csrf_token %}
+          
+          {% include "../includes/form_fields.html" with form=form %}
+          
+          <button type="submit" class="btn btn-secondary">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

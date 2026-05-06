@@ -1,0 +1,13 @@
+{% if widget.is_initial %}
+  <fieldset class="border p-3 border-primary fs-6 text">
+<img src="{{ widget.value.url }}" width="100"/>{% if not widget.required %}
+<input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}"{% if widget.attrs.disabled %} disabled{% endif %}{% if widget.attrs.checked %} checked{% endif %}>
+    
+    <label class="form-label fs-6 text" for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label><br>
+  </fieldset>
+</div>
+{% endif %}
+{% endif %}
+<div class="mb-3">    
+{{ widget.input_text }}</br>
+<input class="form-control form-control-sm" type="{{ widget.type }}" name="{{ widget.name }}"{% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>

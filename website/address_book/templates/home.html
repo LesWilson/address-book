@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <div class="row mt-3 justify-content-between">
+    <div class="col-md-4 offset-md-2 col-4">
+      <h1 class="">Contacts</h1>
+    </div>
+    <div class="text-right col-4">
+      <a href="{% url 'add_contact' %}" class="btn btn-success btn-sm">Add Contact</a>
+    </div>
+  </div>
+
+{% for contact in contacts %}
+  
+  <div class="card mb-2 col-md-6 offset-md-2">
+    <div class="card-body">
+      <h5 class="card-title">{{ contact }}</h5>
+      <p class="card-text">{{ contact.email|default_if_none:"" }}</p>
+      <a href="{% url 'contact' contact.id %}" class="btn btn-primary btn-sm">View</a>
+      <a href="{% url 'delete_contact' contact.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+    </div>
+  </div>
+
+{% endfor %}
+{% else %}
+<div class="row mt-4 justify-content-between">
+  <h1 class="text-bg-dark text-center p-3 fs-3">Please login or register to use the Address Book Site</h1>
+</div>
+{% endif %}
+{% endblock %}
