@@ -10,8 +10,9 @@ urlpatterns = [
     path("register", views.register_user, name="register_user"),
     path("edit_profile", views.edit_profile, name="edit_profile"),
     path("change_password", views.change_password, name="change_password"),
-    path("contact/<int:id>", views.contact, name="contact"),
-    path("delete-contact/<int:id>", views.delete_confirmation, name="delete_contact"),
+    path("contact/<uuid:id>", views.contact, name="contact"),
+    path("delete-contact/<uuid:id>", views.delete_confirmation, name="delete_contact"),
     path("add-contact", views.add_contact, name="add_contact"),
     path("login_required", views.not_logged_in, name="login_required"),
+    path("search", views.search, name="search"),
 ]

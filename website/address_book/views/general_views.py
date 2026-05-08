@@ -13,6 +13,16 @@ def home(request):
     )
 
 
+# def search(request, search_string):
+#     contacts = []
+#     if request.user.is_authenticated:
+#         contacts = Contact.objects.filter(user=request.user)
+
+#     return render(
+#         request=request, template_name="home.html", context={"contacts": contacts}
+#     )
+
+
 def not_logged_in(request):
     return render(request, "login_required.html")
 

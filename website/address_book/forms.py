@@ -5,16 +5,10 @@ from django.contrib.auth.forms import (
     UserCreationForm,
 )
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
 from .models import Contact
-
-
-class CustomFileInput(forms.ClearableFileInput):
-    template_name = "includes/clearable_file_input.html"
-    initial_text = "Current Image"
-    clear_checkbox_label = "Clear Image"
-    input_text = "Choose New Image"
 
 
 class EditProfileForm(UserChangeForm):
@@ -96,6 +90,13 @@ def setFieldFormatting(target):
     target.label_suffix = ""
 
 
+class CustomFileInput(forms.ClearableFileInput):
+    template_name = "includes/clearable_file_input.html"
+    initial_text = "Current Image"
+    clear_checkbox_label = "Remove Image on Save"
+    input_text = "Choose New Image"
+
+
 # Update Contact Form
 class UpdateContactForm(ModelForm):
 
@@ -104,8 +105,25 @@ class UpdateContactForm(ModelForm):
     class Meta:
         model = Contact
         fields = "__all__"
-        exclude = ("user",)
+        exclude = (
+            "user",
+            "updated_by",
+            "created_by",
+        )
 
     def __init__(self, *args, **kwargs):
         super(UpdateContactForm, self).__init__(*args, **kwargs)
         setFieldFormatting(self)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        first_name = cleaned_data.get("first_name")
+        last_name = cleaned_data.get("last_name")
+        # ensure at least one name entered
+        if not first_name and not last_name:
+            msg = "You must enter at least a first or last name."
+            self.add_error("first_name", msg)
+            self.add_error("last_name", msg)
+            # raise ValidationError(
+            #     "Please enter at least a first or last name."
+            # )

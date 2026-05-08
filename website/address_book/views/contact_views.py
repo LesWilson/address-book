@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from ..forms import UpdateContactForm
@@ -16,13 +17,17 @@ def contact(request, id):
             request.POST or None, request.FILES or None, instance=contact
         )
         if form.is_valid():
-            form.save()
+            toBeSaved = form.save(commit=False)
+            toBeSaved.updated_by = request.user
+            toBeSaved.save()
+
             messages.success(
                 request,
                 f"{contact} was successfully updated.",
                 extra_tags="alert alert-success alert-dismissible fade show",
             )
             return redirect("home")
+
         return render(
             request=request,
             template_name="contact.html",
@@ -46,6 +51,8 @@ def add_contact(request):
         if form.is_valid():
             toBeSaved = form.save(commit=False)
             toBeSaved.user = request.user
+            toBeSaved.created_by = request.user
+            toBeSaved.updated_by = request.user
             toBeSaved.save()
             messages.success(
                 request,
@@ -85,3 +92,20 @@ def delete_confirmation(request, id):
             extra_tags="alert alert-danger alert-dismissible fade show",
         )
         return redirect("home")
+
+
+def search(request):
+    contacts = []
+    if request.user.is_authenticated:
+        search_string = request.GET["search_string"]
+        contacts = Contact.objects.filter(
+            Q(user=request.user)
+            & (
+                Q(first_name__icontains=search_string)
+                | Q(last_name__icontains=search_string)
+            )
+        )
+
+    return render(
+        request=request, template_name="home.html", context={"contacts": contacts}
+    )
