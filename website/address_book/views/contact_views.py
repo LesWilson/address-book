@@ -45,32 +45,22 @@ def contact(request, id):
 
 @login_required()
 def add_contact(request):
-    if request.user.is_authenticated:
-        form = UpdateContactForm(request.POST or None, request.FILES or None)
+    form = UpdateContactForm(request.POST or None, request.FILES or None)
 
-        if form.is_valid():
-            toBeSaved = form.save(commit=False)
-            toBeSaved.user = request.user
-            toBeSaved.created_by = request.user
-            toBeSaved.updated_by = request.user
-            toBeSaved.save()
-            messages.success(
-                request,
-                f"A new contact was successfully added.",
-                extra_tags="alert alert-success alert-dismissible fade show",
-            )
-            return redirect("home")
-
-        return render(
-            request=request, template_name="contact.html", context={"form": form}
-        )
-    else:
-        messages.error(
+    if form.is_valid():
+        toBeSaved = form.save(commit=False)
+        toBeSaved.user = request.user
+        toBeSaved.created_by = request.user
+        toBeSaved.updated_by = request.user
+        toBeSaved.save()
+        messages.success(
             request,
-            "You must be logged in to access that page!",
-            extra_tags="alert alert-danger alert-dismissible fade show",
+            f"A new contact was successfully added.",
+            extra_tags="alert alert-success alert-dismissible fade show",
         )
         return redirect("home")
+
+    return render(request=request, template_name="contact.html", context={"form": form})
 
 
 @login_required()
